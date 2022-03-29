@@ -6,5 +6,6 @@ public class Main {
 	int i = 9;
     int k = 8;
         System.out.println("aaaa");
+        System.out.println("ehgdhrgechgcr");
     }
 }
