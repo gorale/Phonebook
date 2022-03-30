@@ -17,13 +17,13 @@ public class ContactController {
                     case CREATE:
                         System.out.println(service.add());
                         break;
-                    case READE_ALL:
+                    case READE:
                         System.out.println(service.getAll());
                         System.out.println("Do you want to give out someone else's information?");
                         System.out.println("yes or no");
                         String mess = sc.nextLine();
                         if(mess.equals("yes")){
-                            System.out.println("Enter first name: ");
+                            System.out.println("search first name: ");
                             String firstname = sc.nextLine();
                             service.get(firstname);
                         }

@@ -10,7 +10,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Service implements CreatReadUpdateDelete {
+public class Service implements CreateReadUpdateDelete {
     Map<String, Contact> mapContact = new HashMap<>();
     Scanner sc = new Scanner(System.in);
     String firstName;
@@ -33,6 +33,7 @@ public class Service implements CreatReadUpdateDelete {
         return "";
     }
 
+    @Override
     public Map<String, Contact> add() {
         ContactValidation cn = new ContactValidation();
         System.out.println("Enter firstname");
@@ -109,6 +110,7 @@ public class Service implements CreatReadUpdateDelete {
         return mapContact;
     }
 
+    @Override
     public String getAll(){
         for (Contact item : mapContact.values()){
             System.out.println(item.getFirstName()+"\n");
@@ -116,6 +118,7 @@ public class Service implements CreatReadUpdateDelete {
         return "";
     }
 
+    @Override
     public void get(String firstName){
         if (mapContact.containsKey(firstName)){
             System.out.println(mapContact.get(firstName).toString());
