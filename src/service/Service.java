@@ -86,7 +86,7 @@ public class Service implements CreateReadUpdateDelete {
 
         while (true) {
             String myEmail = sc.nextLine();
-            if (cn.isValidEmail(myEmail)) {
+            if (cn.isValidEmail(myEmail,emailType)) {
                 break;
             } else
                 System.out.println("Enter valid email");
