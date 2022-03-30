@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Service implements CreatReadUpdateDelete {
-    Map<String, Contact> mapContact = new HashMap<String, Contact>();
+    Map<String, Contact> mapContact = new HashMap<>();
     Scanner sc = new Scanner(System.in);
     String firstName;
     String lastName;
@@ -33,7 +33,7 @@ public class Service implements CreatReadUpdateDelete {
         return "";
     }
 
-    public Contact add() {
+    public Map<String, Contact> add() {
         ContactValidation cn = new ContactValidation();
         System.out.println("Enter firstname");
         while (true) {
@@ -106,7 +106,24 @@ public class Service implements CreatReadUpdateDelete {
         mapContact.put(firstName, contact);
 
 
-        return contact;
+        return mapContact;
     }
+
+    public String getAll(){
+        for (Contact item : mapContact.values()){
+            System.out.println(item.getFirstName()+"\n");
+        }
+        return "";
+    }
+
+    public void get(String firstName){
+        if (mapContact.containsKey(firstName)){
+            System.out.println(mapContact.get(firstName).toString());
+        }else{
+            System.out.println("can't find user with "+firstName+" name");
+        }
+    }
+
+
 
 }
