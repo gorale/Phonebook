@@ -9,7 +9,6 @@ public class ContactValidation {
 
     private static final Pattern PATTERN_GLOBAL_EMAIL = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
 
-    private String firstName;
 
     public boolean isValidFirstName(String firstName) {
         if (firstName == null || firstName.length() == 0) {
@@ -36,18 +35,7 @@ public class ContactValidation {
         if (phoneNumber == null || phoneNumber.length() == 0) {
             return false;
         }
-
-        for (int i = 0; i < phoneNumber.length(); i++) {
-            if (((phoneNumber.charAt(i) >= '0' && phoneNumber.charAt(i) <= '9') ||
-                    phoneNumber.charAt(0) == '+' ||
-                    phoneNumber.charAt(i) == '#') &&
-                    (phoneNumber.length() >= 3 && phoneNumber.length() <= 16)) {
-                return true;
-            } else
-                return false;
-
-        }
-        return false;
+        return phoneNumber.matches("[0-9]+");
     }
 
     public boolean isValidEmail(String email, EmailType emailType) {
