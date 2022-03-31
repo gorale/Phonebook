@@ -3,10 +3,11 @@ package service;
 import model.Contact;
 
 import java.util.Map;
+import java.util.UUID;
 
 public interface CreateReadUpdateDelete  {
 
-    Map<String, Contact> add();
+    Map<UUID, Contact> add();
 
     String getAll();
 
