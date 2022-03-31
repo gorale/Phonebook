@@ -25,6 +25,7 @@ public class ContactController {
                         if(mess.equals("yes")){
                             System.out.println("search first name: ");
                             String firstname = sc.nextLine();
+
                             service.get(firstname);
                         }
                         break;

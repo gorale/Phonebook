@@ -23,6 +23,10 @@ public class Contact {
         this.phoneNumbers = phoneNumbers;
     }
 
+    public Contact() {
+        super();
+    }
+
     public String getFirstName() {
         return firstName;
     }

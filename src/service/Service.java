@@ -5,13 +5,11 @@ import model.Enum.EmailType;
 import model.Enum.NumberType;
 import validation.ContactValidation;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Service implements CreateReadUpdateDelete {
-    Map<String, Contact> mapContact = new HashMap<>();
+
+    Map<UUID, Contact> mapContact = new HashMap<>();
     Scanner sc = new Scanner(System.in);
     String firstName;
     String lastName;
@@ -34,7 +32,8 @@ public class Service implements CreateReadUpdateDelete {
     }
 
     @Override
-    public Map<String, Contact> add() {
+    public Map<UUID, Contact> add() {
+        UUID uuid = UUID.randomUUID();
         ContactValidation cn = new ContactValidation();
         System.out.println("Enter firstname");
         while (true) {
@@ -104,7 +103,7 @@ public class Service implements CreateReadUpdateDelete {
 
 
         Contact contact = new Contact(firstName, lastName, company, phoneNumbers, email);
-        mapContact.put(firstName, contact);
+        mapContact.put(uuid, contact);
 
 
         return mapContact;
@@ -120,11 +119,14 @@ public class Service implements CreateReadUpdateDelete {
 
     @Override
     public void get(String firstName){
-        if (mapContact.containsKey(firstName)){
-            System.out.println(mapContact.get(firstName).toString());
-        }else{
-            System.out.println("can't find user with "+firstName+" name");
+        for (Map.Entry<UUID,Contact> map : mapContact.entrySet()){
+            if(map.getValue().getFirstName().equals(firstName)){
+            System.out.println(map);
+            }
         }
+
+            System.out.println("can't find user with "+firstName+" name");
+
     }
 
 
