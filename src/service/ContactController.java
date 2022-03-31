@@ -7,13 +7,22 @@ import java.util.Scanner;
 
 public class ContactController {
     Service service = new Service();
+    Scanner sc = new Scanner(System.in);
+    CRUD message;
 
     public void start() {
         while (true) {
-            System.out.println("(create,reade,update or delete)");
-            Scanner sc = new Scanner(System.in);
-            CRUD message = CRUD.valueOf(sc.nextLine().toUpperCase(Locale.ROOT));
-                switch (message) {
+            try {
+                System.out.println("Please enter one of the following action "+'\n'+
+                        "-CREATE"+'\n'+
+                        "-READE"+'\n'+
+                        "-UPDATE"+'\n'+
+                        "-DELETE");
+                message = CRUD.valueOf(sc.nextLine().toUpperCase(Locale.ROOT));
+            } catch (IllegalArgumentException e){
+                continue;
+            }
+            switch (message) {
                     case CREATE:
                         System.out.println(service.add());
                         break;
