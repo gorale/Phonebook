@@ -21,6 +21,33 @@ public class Service  implements CreateReadUpdateDelete {
     Contact.PhoneNumbers phoneNumbers;
 
 
+    public static Boolean question(){
+        String question = "";
+        Scanner sc = new Scanner(System.in);
+        while (true) {
+            try {
+                System.out.println("Do you want to give out someone else's information?" + '\n'
+                        + "-YES" + '\n' + "-NO");
+                question = sc.nextLine().toUpperCase(Locale.ROOT);
+
+            } catch (IllegalArgumentException e) {
+
+                continue;
+            }
+
+
+            switch (question) {
+                case "YES":
+
+                    return true;
+                case "NO":
+                    break;
+            }
+            break;
+        }
+        return false;
+    }
+
     public static String answer() {
         String answer = "";
         Scanner sc = new Scanner(System.in);
@@ -49,7 +76,7 @@ public class Service  implements CreateReadUpdateDelete {
     }
 
     @Override
-    public Map<UUID, Contact> add() {
+    public Contact add() {
         uuid = UUID.randomUUID();
         ContactValidation cn = new ContactValidation();
         System.out.println("Enter firstname");
@@ -118,8 +145,9 @@ public class Service  implements CreateReadUpdateDelete {
             System.out.println("email: ");
 
 
+            String myEmail = sc.nextLine();
             while (true) {
-                String myEmail = sc.nextLine();
+
                 if (cn.isValidEmail(myEmail, emailType)) {
                     break;
                 } else
@@ -141,27 +169,38 @@ public class Service  implements CreateReadUpdateDelete {
             mapContact.put(uuid, contact);
 
 
-            return mapContact;
+            return contact;
         }
     }
 
         @Override
         public String getAll () {
+
+            List<String> firstNameList = new ArrayList<>();
             for (Contact item : mapContact.values()) {
-                System.out.println(item.getFirstName() + "\n");
+            firstNameList.add(item.getFirstName());
+
+            }
+            Collections.sort(firstNameList);
+            for(String item: firstNameList){
+                System.out.println(item);
             }
             return "";
         }
 
     @Override
     public void get(String firstName){
+        int count = 0;
         for (Map.Entry<UUID,Contact> map : mapContact.entrySet()){
             if(map.getValue().getFirstName().equals(firstName)){
-            System.out.println(map);
+                count++;
+            System.out.println(map.getValue());
             }
         }
+        if(count == 0){
+            System.out.println("Can't find this user");
+        }
 
-            System.out.println("can't find user with "+firstName+" name");
 
     }
 

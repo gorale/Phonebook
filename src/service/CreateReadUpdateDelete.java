@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface CreateReadUpdateDelete  {
 
-    Map<UUID, Contact> add();
+    Contact add();
 
     String getAll();
 
