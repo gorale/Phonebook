@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public class ContactValidation {
 
-    private static final Pattern PATTERN_GLOBAL_EMAIL = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
+   private static final Pattern PATTERN_GLOBAL_EMAIL = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
 
     private String firstName;
 
@@ -38,12 +38,11 @@ public class ContactValidation {
         }
 
         for (int i = 0; i < phoneNumber.length(); i++) {
-            if (((phoneNumber.charAt(i) >= '0' && phoneNumber.charAt(i) <= '9') ||
-                    phoneNumber.charAt(0) == '+' ||
-                    phoneNumber.charAt(i) == '#') &&
-                    (phoneNumber.length() >= 3 && phoneNumber.length() <= 16)) {
+            if ((phoneNumber.length() >= 3 && phoneNumber.length() <= 16)&&
+                    (phoneNumber.charAt(i) >= '0' && phoneNumber.charAt(i) <= '9')) {
                 return true;
-            } else
+            }
+            else
                 return false;
 
         }

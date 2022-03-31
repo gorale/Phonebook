@@ -19,6 +19,12 @@ public class Service  implements CreateReadUpdateDelete {
     UUID uuid;
     NumberType numberType;
     Contact.PhoneNumbers phoneNumbers;
+    EmailType emailType;
+
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+
+
 
 
     public static Boolean question(){
@@ -69,6 +75,8 @@ public class Service  implements CreateReadUpdateDelete {
                     return sc.nextLine();
                 case "NO":
                     break;
+                default:
+                    answer();
             }
             break;
         }
@@ -81,12 +89,12 @@ public class Service  implements CreateReadUpdateDelete {
         ContactValidation cn = new ContactValidation();
         System.out.println("Enter firstname");
         while (true) {
-            firstName= sc.nextLine();
+            firstName = sc.nextLine();
 
             if (cn.isValidFirstName(firstName)) {
                 break;
             } else {
-                System.out.println("Enter valid firstname");
+                System.out.println(ANSI_RED +"Enter valid firstname");
             }
         }
 
@@ -97,13 +105,13 @@ public class Service  implements CreateReadUpdateDelete {
         company = answer();
         while (true) {
             try {
-                System.out.println("Choose phone number type-" + '\n' + "-MOBILE" + '\n' +
+                System.out.println(ANSI_YELLOW + "Choose phone number type-" + '\n' + "-MOBILE" + '\n' +
                         "-HOME" + '\n' +
                         "-SCHOOL" + '\n' +
                         "-WORK");
                 numberType = NumberType.valueOf(sc.nextLine().toUpperCase(Locale.ROOT));
             } catch (IllegalArgumentException e) {
-                System.out.println("Enter valid type");
+                System.out.println(ANSI_RED + "Enter valid type");
                 continue;
 
 
@@ -119,9 +127,9 @@ public class Service  implements CreateReadUpdateDelete {
                     break;
 
                 } else {
-                    System.out.println("Enter valid phone number");
+                    System.out.println(ANSI_RED + "Enter valid phone number");
                 }
-            }
+
 
             //Contact.PhoneNumbers phoneNumbers;
             switch (numberType) {
@@ -134,42 +142,49 @@ public class Service  implements CreateReadUpdateDelete {
                 default:
                     phoneNumbers = new Contact.PhoneNumbers(NumberType.OTHER, number);
             }
+        }
 
-
-           // System.out.println("Choose email type(gmail,email,icloud,other)");
-            System.out.println("Choose email type-" + '\n' + "-GMAIL" + '\n' +
-                    "-MAIL" + '\n' +
-                    "-ICLOUD" + '\n' +
-                    "-OTHER");
-            EmailType emailType = EmailType.valueOf(sc.nextLine().toUpperCase(Locale.ROOT));
-            System.out.println("email: ");
-
-
-            String myEmail = sc.nextLine();
             while (true) {
+                try {
+                    System.out.println(ANSI_YELLOW +"Choose email type-" + '\n' +
+                            "-GMAIL" + '\n' +
+                            "-MAIL" + '\n' +
+                            "-ICLOUD" + '\n' +
+                            "-OTHER");
+                    emailType = EmailType.valueOf(sc.nextLine().toUpperCase(Locale.ROOT));
+                    System.out.println("email: ");
+                } catch (IllegalArgumentException e) {
+                    System.out.println(ANSI_RED +"Enter valid type");
+                    continue;
+                }
 
-                if (cn.isValidEmail(myEmail, emailType)) {
-                    break;
-                } else
-                    System.out.println("Enter valid email");
+
+                String myEmail = sc.nextLine();
+                while (true) {
+
+                    if (cn.isValidEmail(myEmail, emailType)) {
+                        break;
+                    } else
+                        System.out.println(ANSI_RED +"Enter valid email");
+                }
+                Contact.Email email;
+                switch (emailType) {
+                    case GMAIL:
+                    case EMAIL:
+                    case ICLOUD:
+                        email = new Contact.Email(emailType, myEmail);
+                        break;
+                    default:
+                        email = new Contact.Email(EmailType.OTHER, myEmail);
+                }
+
+
+                Contact contact = new Contact(firstName, lastName, company, phoneNumbers, email);
+                mapContact.put(uuid, contact);
+
+
+                return contact;
             }
-            Contact.Email email;
-            switch (emailType) {
-                case GMAIL:
-                case EMAIL:
-                case ICLOUD:
-                    email = new Contact.Email(emailType, myEmail);
-                    break;
-                default:
-                    email = new Contact.Email(EmailType.OTHER, myEmail);
-            }
-
-
-            Contact contact = new Contact(firstName, lastName, company, phoneNumbers, email);
-            mapContact.put(uuid, contact);
-
-
-            return contact;
         }
     }
 
