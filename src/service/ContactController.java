@@ -28,17 +28,15 @@ public class ContactController {
                         break;
                     case READE:
                         System.out.println(service.getAll());
-                        System.out.println("Do you want to give out someone else's information?");
-                        System.out.println("yes or no");
-                        String mess = sc.nextLine();
-                        if(mess.equals("yes")){
+                        boolean question = Service.question();
+                        if(question){
                             System.out.println("search first name: ");
                             String firstname = sc.nextLine();
                             service.get(firstname);
                         }
                         break;
                     case UPDATE:
-                        System.out.println();
+
 
                 }
 

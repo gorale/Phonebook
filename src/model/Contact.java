@@ -23,6 +23,10 @@ public class Contact {
         this.phoneNumbers = phoneNumbers;
     }
 
+    public Contact() {
+        super();
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -65,13 +69,13 @@ public class Contact {
 
     @Override
     public String toString() {
-        return "Contact{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", company='" + company + '\'' +
-                ", phoneNumbers=" + phoneNumbers +
-                ", email=" + email +
-                '}';
+        return "Contact\t|" + (firstName.equals("")?"name passing":firstName)  +
+                "\t|"+ (lastName.equals("")?"last name passing":lastName) +
+                "\t|"+(company.equals("")?"company name passing":company)+"\t|"
+                +(phoneNumbers.number.equals("")?"phone number passing":phoneNumbers.number)+
+                "\t|"+(email.email.equals("")?"email passing":email.email);
+
+
     }
 
     public static class PhoneNumbers {
