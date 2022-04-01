@@ -7,7 +7,7 @@ import validation.ContactValidation;
 
 import java.util.*;
 
-public class Service  implements CreateReadUpdateDelete {
+public class Service implements CreateReadUpdateDelete {
 
     Map<UUID, Contact> mapContact = new HashMap<>();
     Scanner sc = new Scanner(System.in);
@@ -25,10 +25,8 @@ public class Service  implements CreateReadUpdateDelete {
     public static final String ANSI_YELLOW = "\u001B[33m";
 
 
-
-
-    public static Boolean question(){
-        String question = "";
+    public static boolean question() {
+        String question;
         Scanner sc = new Scanner(System.in);
         while (true) {
             try {
@@ -42,17 +40,20 @@ public class Service  implements CreateReadUpdateDelete {
             }
 
 
-            switch (question) {
-                case "YES":
+                switch (question) {
+                    case "YES":
+                        return true;
+                    case "NO":
+                        break;
+                    default:
+                        question();
 
-                    return true;
-                case "NO":
-                    break;
+                }
+                break;
             }
-            break;
+            return false;
         }
-        return false;
-    }
+
 
     public static String answer() {
         String answer = "";
@@ -94,7 +95,7 @@ public class Service  implements CreateReadUpdateDelete {
             if (cn.isValidFirstName(firstName)) {
                 break;
             } else {
-                System.out.println(ANSI_RED +"Enter valid firstname");
+                System.out.println(ANSI_RED + "Enter valid firstname");
             }
         }
 
@@ -119,7 +120,6 @@ public class Service  implements CreateReadUpdateDelete {
 
             System.out.println("Enter phone number");
 
-
             while (true) {
                 number = sc.nextLine();
 
@@ -129,9 +129,10 @@ public class Service  implements CreateReadUpdateDelete {
                 } else {
                     System.out.println(ANSI_RED + "Enter valid phone number");
                 }
+            }
 
+//            Contact.PhoneNumbers phoneNumbers = null;
 
-            //Contact.PhoneNumbers phoneNumbers;
             switch (numberType) {
                 case WORK:
                 case MOBILE:
@@ -142,30 +143,34 @@ public class Service  implements CreateReadUpdateDelete {
                 default:
                     phoneNumbers = new Contact.PhoneNumbers(NumberType.OTHER, number);
             }
-        }
+
 
             while (true) {
                 try {
-                    System.out.println(ANSI_YELLOW +"Choose email type-" + '\n' +
+                    System.out.println(ANSI_YELLOW + "Choose email type-" + '\n' +
                             "-GMAIL" + '\n' +
-                            "-MAIL" + '\n' +
+                            "-EMAIL" + '\n' +
                             "-ICLOUD" + '\n' +
                             "-OTHER");
                     emailType = EmailType.valueOf(sc.nextLine().toUpperCase(Locale.ROOT));
-                    System.out.println("email: ");
                 } catch (IllegalArgumentException e) {
-                    System.out.println(ANSI_RED +"Enter valid type");
+                    System.out.println(ANSI_RED + "Enter valid type");
                     continue;
+
+
                 }
 
 
-                String myEmail = sc.nextLine();
+                System.out.println("email: ");
+
+//            String myEmail;
                 while (true) {
+                    myEmail = sc.nextLine();
 
                     if (cn.isValidEmail(myEmail, emailType)) {
                         break;
                     } else
-                        System.out.println(ANSI_RED +"Enter valid email");
+                        System.out.println(ANSI_RED + "Enter valid email");
                 }
                 Contact.Email email;
                 switch (emailType) {
@@ -188,37 +193,73 @@ public class Service  implements CreateReadUpdateDelete {
         }
     }
 
-        @Override
-        public String getAll () {
-
-            List<String> firstNameList = new ArrayList<>();
-            for (Contact item : mapContact.values()) {
-            firstNameList.add(item.getFirstName());
-
-            }
-            Collections.sort(firstNameList);
-            for(String item: firstNameList){
-                System.out.println(item);
-            }
-            return "";
-        }
 
     @Override
-    public void get(String firstName){
+    public String getAll() {
+
+        List<String> firstNameList = new ArrayList<>();
+        for (Contact item : mapContact.values()) {
+            firstNameList.add(item.getFirstName());
+
+        }
+        Collections.sort(firstNameList);
+        for (String item : firstNameList) {
+            System.out.println(item);
+        }
+        return "";
+    }
+
+    @Override
+    public void get(String firstName) {
         int count = 0;
-        for (Map.Entry<UUID,Contact> map : mapContact.entrySet()){
-            if(map.getValue().getFirstName().equals(firstName)){
+        for (Map.Entry<UUID, Contact> map : mapContact.entrySet()) {
+            if (map.getValue().getFirstName().equals(firstName)) {
                 count++;
-            System.out.println(map.getValue());
+                System.out.println(map.getValue());
             }
         }
-        if(count == 0){
+        if (count == 0) {
             System.out.println("Can't find this user");
         }
 
 
     }
 
+    @Override
+    public void delete() {
+        System.out.println("Enter phone number");
+        String ph = sc.nextLine();
+        Contact contact = new Contact();
 
+
+     // mapContact.containsValue(ph);
+
+      /*  if(ph.equals(contact.getPhoneNumbers()))
+                mapContact.remove(ph);
+            }
+        }
+*/
+
+        for (Map.Entry<UUID, Contact> map : mapContact.entrySet()) {
+            if (map.getValue().getFirstName().equals(ph)) {
+                mapContact.remove(map.getKey());
+                break;
+
+
+            }
+      /*  for (Map.Entry<UUID, Contact> map : mapContact.entrySet()) {
+            if (ph.equals(contact.getFirstName())) {
+                mapContact.remove(firstName);
+                break;
+
+
+            }
+*/
+
+        }
     }
+}
+
+
+
 

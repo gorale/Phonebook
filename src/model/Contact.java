@@ -9,6 +9,7 @@ public class Contact {
     private String company;
     private PhoneNumbers phoneNumbers;
     private Email email;
+    public static final String ANSI_BLUE = "\u001B[34m";
 
     public Contact(String firstName, String lastName, String company, PhoneNumbers phoneNumbers, Email email) {
         this.firstName = firstName;
@@ -69,7 +70,7 @@ public class Contact {
 
     @Override
     public String toString() {
-        return "Contact\t|" + (firstName.equals("")?"name passing":firstName)  +
+        return ANSI_BLUE+"Contact\t|" + (firstName.equals("")?"name passing":firstName)  +
                 "\t|"+ (lastName.equals("")?"last name passing":lastName) +
                 "\t|"+(company.equals("")?"company name passing":company)+"\t|"
                 +(phoneNumbers.number.equals("")?"phone number passing":phoneNumbers.number)+
@@ -85,6 +86,10 @@ public class Contact {
         public PhoneNumbers(NumberType numberType, String number) {
             this.numberType = numberType;
             this.number = number;
+        }
+
+        public PhoneNumbers() {
+
         }
 
         @Override

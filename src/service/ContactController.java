@@ -25,34 +25,38 @@ public class ContactController {
 
         while (true) {
             try {
-                System.out.println(ANSI_YELLOW+ "Please enter one of the following action "+'\n'+
-                        "-CREATE"+'\n'+
-                        "-READE"+'\n'+
-                        "-UPDATE"+'\n'+
+                System.out.println(ANSI_YELLOW + "Please enter one of the following action " + '\n' +
+                        "-CREATE" + '\n' +
+                        "-READE" + '\n' +
+                        "-UPDATE" + '\n' +
                         "-DELETE");
                 //System.out.println("Enter valid action");
                 message = CRUD.valueOf(sc.nextLine().toUpperCase(Locale.ROOT));
-            } catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 continue;
             }
             switch (message) {
-                    case CREATE:
-                        System.out.println(service.add());
-                        break;
-                    case READE:
-                        System.out.println(service.getAll());
-                        boolean question = Service.question();
-                        if(question){
-                            System.out.println("search first name: ");
-                            String firstname = sc.nextLine();
-                            service.get(firstname);
-                        }
-                        break;
-                    case UPDATE:
+                case CREATE:
+                    System.out.println(service.add());
+                    break;
+                case READE:
+                    System.out.println(service.getAll());
 
+                    if (Service.question()) {
+                        System.out.println("search first name: ");
+                        String firstname = sc.nextLine();
+                        service.get(firstname);
+                    }
+                    break;
+                case UPDATE:
+                case DELETE:
+                    service.delete();
+                    break;
+            }
 
-                }
 
         }
+
     }
 }
+
