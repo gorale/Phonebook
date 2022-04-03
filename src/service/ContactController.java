@@ -40,7 +40,11 @@ public class ContactController {
                     System.out.println(service.add());
                     break;
                 case READE:
-                    System.out.println(service.getAll());
+                    if(service.getAll() == null){
+                        break;
+                    }else{
+                        System.out.println(service.getAll());
+                    }
 
                     if (Service.question()) {
                         System.out.println("search first name: ");
@@ -49,6 +53,8 @@ public class ContactController {
                     }
                     break;
                 case UPDATE:
+                    service.update();
+                    break;
                 case DELETE:
                     service.delete();
                     break;

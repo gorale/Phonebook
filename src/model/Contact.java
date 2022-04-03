@@ -2,6 +2,11 @@ package model;
 
 import model.Enum.EmailType;
 import model.Enum.NumberType;
+import service.Service;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class Contact {
     private String firstName;
@@ -10,6 +15,7 @@ public class Contact {
     private PhoneNumbers phoneNumbers;
     private Email email;
     public static final String ANSI_BLUE = "\u001B[34m";
+    Map<UUID, Contact> mapContact = new HashMap<>();
 
     public Contact(String firstName, String lastName, String company, PhoneNumbers phoneNumbers, Email email) {
         this.firstName = firstName;
@@ -70,14 +76,16 @@ public class Contact {
 
     @Override
     public String toString() {
-        return ANSI_BLUE+"Contact\t|" + (firstName.equals("")?"name passing":firstName)  +
+       return ANSI_BLUE+"Contact\t|" + (firstName.equals("")?"name passing":firstName)  +
                 "\t|"+ (lastName.equals("")?"last name passing":lastName) +
                 "\t|"+(company.equals("")?"company name passing":company)+"\t|"
                 +(phoneNumbers.number.equals("")?"phone number passing":phoneNumbers.number)+
                 "\t|"+(email.email.equals("")?"email passing":email.email);
 
 
+
     }
+
 
     public static class PhoneNumbers {
         NumberType numberType;
@@ -92,6 +100,22 @@ public class Contact {
 
         }
 
+        public NumberType getNumberType() {
+            return numberType;
+        }
+
+        public void setNumberType(NumberType numberType) {
+            this.numberType = numberType;
+        }
+
+        public String getNumber() {
+            return number;
+        }
+
+        public void setNumber(String number) {
+            this.number = number;
+        }
+
         @Override
         public String toString() {
             return "PhoneNumbers{" +
@@ -102,12 +126,30 @@ public class Contact {
     }
 
 
+
+
     public static class Email {
         EmailType emailType;
-        private String email;
+         String email;
 
         public Email(EmailType emailType, String email) {
             this.emailType = emailType;
+            this.email = email;
+        }
+
+        public EmailType getEmailType() {
+            return emailType;
+        }
+
+        public void setEmailType(EmailType emailType) {
+            this.emailType = emailType;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
             this.email = email;
         }
 

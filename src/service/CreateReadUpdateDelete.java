@@ -10,6 +10,7 @@ public interface CreateReadUpdateDelete  {
 
     void get(String firstname);
     void delete();
+    void update();
 
 
 
