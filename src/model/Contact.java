@@ -74,7 +74,7 @@ public class Contact {
                 "\t|"+ (lastName.equals("")?"last name passing":lastName) +
                 "\t|"+(company.equals("")?"company name passing":company)+"\t|"
                 +(phoneNumbers.number.equals("")?"phone number passing":phoneNumbers.number)+
-                "\t|"+(email.email.equals("")?"email passing":email.email);
+                "\t|"+(email.email == null?"email passing":email.email);
 
 
     }

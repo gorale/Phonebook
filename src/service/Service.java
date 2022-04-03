@@ -9,6 +9,8 @@ import java.util.*;
 
 public class Service implements CreateReadUpdateDelete {
 
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
     Map<UUID, Contact> mapContact = new HashMap<>();
     Scanner sc = new Scanner(System.in);
     String firstName;
@@ -20,10 +22,6 @@ public class Service implements CreateReadUpdateDelete {
     NumberType numberType;
     Contact.PhoneNumbers phoneNumbers;
     EmailType emailType;
-
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-
 
     public static boolean question() {
         String question;
@@ -40,19 +38,19 @@ public class Service implements CreateReadUpdateDelete {
             }
 
 
-                switch (question) {
-                    case "YES":
-                        return true;
-                    case "NO":
-                        break;
-                    default:
-                        question();
+            switch (question) {
+                case "YES":
+                    return true;
+                case "NO":
+                    break;
+                default:
+                    question();
 
-                }
-                break;
             }
-            return false;
+            break;
         }
+        return false;
+    }
 
 
     public static String answer() {
@@ -60,8 +58,9 @@ public class Service implements CreateReadUpdateDelete {
         Scanner sc = new Scanner(System.in);
         while (true) {
             try {
-                System.out.println("Choose answer:" + '\n'
+                System.out.println("Choose answer. . ." + '\n'
                         + "-YES" + '\n' + "-NO");
+                System.out.print("your choose: ");
                 answer = sc.nextLine().toUpperCase(Locale.ROOT);
 
             } catch (IllegalArgumentException e) {
@@ -72,7 +71,7 @@ public class Service implements CreateReadUpdateDelete {
 
             switch (answer) {
                 case "YES":
-                    System.out.println("Enter field ");
+                    System.out.print("Enter field: ");
                     return sc.nextLine();
                 case "NO":
                     break;
@@ -88,7 +87,7 @@ public class Service implements CreateReadUpdateDelete {
     public Contact add() {
         uuid = UUID.randomUUID();
         ContactValidation cn = new ContactValidation();
-        System.out.println("Enter firstname");
+        System.out.print("Enter firstname: ");
         while (true) {
             firstName = sc.nextLine();
 
@@ -110,6 +109,7 @@ public class Service implements CreateReadUpdateDelete {
                         "-HOME" + '\n' +
                         "-SCHOOL" + '\n' +
                         "-WORK");
+                System.out.print("your choose: ");
                 numberType = NumberType.valueOf(sc.nextLine().toUpperCase(Locale.ROOT));
             } catch (IllegalArgumentException e) {
                 System.out.println(ANSI_RED + "Enter valid type");
@@ -118,7 +118,7 @@ public class Service implements CreateReadUpdateDelete {
 
             }
 
-            System.out.println("Enter phone number");
+            System.out.print("Enter phone number: ");
 
             while (true) {
                 number = sc.nextLine();
@@ -152,21 +152,18 @@ public class Service implements CreateReadUpdateDelete {
                             "-EMAIL" + '\n' +
                             "-ICLOUD" + '\n' +
                             "-OTHER");
+                    System.out.print("your choose: ");
                     emailType = EmailType.valueOf(sc.nextLine().toUpperCase(Locale.ROOT));
                 } catch (IllegalArgumentException e) {
                     System.out.println(ANSI_RED + "Enter valid type");
                     continue;
-
-
                 }
 
-
-                System.out.println("email: ");
+                System.out.print("Your Mail: ");
 
 //            String myEmail;
                 while (true) {
                     myEmail = sc.nextLine();
-
                     if (cn.isValidEmail(myEmail, emailType)) {
                         break;
                     } else
@@ -198,6 +195,11 @@ public class Service implements CreateReadUpdateDelete {
     public String getAll() {
 
         List<String> firstNameList = new ArrayList<>();
+
+        if (mapContact.size() == 0) {
+            System.out.println("no contacts");
+            return null;
+        }
         for (Contact item : mapContact.values()) {
             firstNameList.add(item.getFirstName());
 
@@ -227,12 +229,12 @@ public class Service implements CreateReadUpdateDelete {
 
     @Override
     public void delete() {
-        System.out.println("Enter phone number");
+        System.out.println(getAll());
+        System.out.println("Enter First name");
         String ph = sc.nextLine();
-        Contact contact = new Contact();
 
 
-     // mapContact.containsValue(ph);
+        // mapContact.containsValue(ph);
 
       /*  if(ph.equals(contact.getPhoneNumbers()))
                 mapContact.remove(ph);
