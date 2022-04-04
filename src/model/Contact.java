@@ -81,8 +81,8 @@ public class Contact {
        return ANSI_BLUE+"Contact\t|" + (firstName.equals("")?"name passing":firstName)  +
                 "\t|"+ (lastName.equals("")?"last name passing":lastName) +
                 "\t|"+(company.equals("")?"company name passing":company)+"\t|"
-                +(phoneNumbers.number.equals("")?"phone number passing":phoneNumbers.number)+
-                "\t|"+(email.email == null?"email passing":email.email);
+                +(phoneNumbers.number.equals("")?"phone number passing":phoneNumbers.numberType+": "+phoneNumbers.number)+
+                "\t|"+(email.email == null?"email passing":email.emailType+": "+email.email);
 
 
 

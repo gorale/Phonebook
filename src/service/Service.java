@@ -49,7 +49,7 @@ public class Service implements CreateReadUpdateDelete {
 
         switch (answer) {
             case "YES":
-                System.out.println("Enter field ");
+                System.out.print("Enter field: ");
                 return sc.nextLine();
             case "NO":
                 break;
@@ -61,14 +61,14 @@ public class Service implements CreateReadUpdateDelete {
     }
     public String insertFirstName(){
        String firstName;
-        System.out.println("Enter firstname");
+        System.out.print("Enter firstname: ");
         while (true) {
            firstName = sc.nextLine();
 
             if (cn.isValidFirstName(firstName)) {
                 break;
             } else {
-                System.out.println(ANSI_RED + "Enter valid firstname");
+                System.out.print(ANSI_RED + "Enter valid firstname: ");
             }
         }
         return  firstName;
@@ -83,9 +83,10 @@ public class Service implements CreateReadUpdateDelete {
                         "-HOME" + '\n' +
                         "-SCHOOL" + '\n' +
                         "-WORK");
+                System.out.print("Enter your choose: ");
                 numberType = NumberType.valueOf(sc.nextLine().toUpperCase(Locale.ROOT));
             } catch (IllegalArgumentException e) {
-                System.out.println(ANSI_RED + "Enter valid type");
+                System.out.print(ANSI_RED + "Enter valid type: ");
                 continue;
 
 
@@ -118,15 +119,17 @@ public class Service implements CreateReadUpdateDelete {
                         "-HOME" + '\n' +
                         "-SCHOOL" + '\n' +
                         "-WORK");
+                System.out.print("Enter your choose: ");
+
                 numberType = NumberType.valueOf(sc.nextLine().toUpperCase(Locale.ROOT));
             } catch (IllegalArgumentException e) {
-                System.out.println(ANSI_RED + "Enter valid type");
+                System.out.print(ANSI_RED + "Enter valid type: ");
                 continue;
 
 
             }
 
-            System.out.println("Enter phone number");
+            System.out.print("Enter phone number: ");
 
             while (true) {
                 number = sc.nextLine();
@@ -135,7 +138,7 @@ public class Service implements CreateReadUpdateDelete {
                     break;
 
                 } else {
-                    System.out.println(ANSI_RED + "Enter valid phone number");
+                    System.out.print(ANSI_RED + "Enter valid phone number: ");
                 }
             }
 
@@ -159,16 +162,17 @@ public class Service implements CreateReadUpdateDelete {
                             "-EMAIL" + '\n' +
                             "-ICLOUD" + '\n' +
                             "-OTHER");
+                    System.out.print("Enter your choose: ");
                     emailType = EmailType.valueOf(sc.nextLine().toUpperCase(Locale.ROOT));
                 } catch (IllegalArgumentException e) {
-                    System.out.println(ANSI_RED + "Enter valid type");
+                    System.out.print(ANSI_RED + "Enter valid type: ");
                     continue;
 
 
                 }
 
 
-                System.out.println("email: ");
+                System.out.print("Your Email: ");
 
 
                 while (true) {
@@ -177,7 +181,7 @@ public class Service implements CreateReadUpdateDelete {
                     if (cn.isValidEmail(myEmail, emailType)) {
                         break;
                     } else
-                        System.out.println(ANSI_RED + "Enter valid email");
+                        System.out.print(ANSI_RED + "Enter valid email: ");
                 }
                 switch (emailType) {
                     case GMAIL:
@@ -206,7 +210,7 @@ public class Service implements CreateReadUpdateDelete {
         List<String> firstNameList = new ArrayList<>();
         if (mapContact.size() == 0) {
             System.out.println("no contacts");
-            return null;
+            return "";
         }
         for (Contact item : mapContact.values()) {
             firstNameList.add(item.getFirstName());
@@ -330,6 +334,8 @@ public class Service implements CreateReadUpdateDelete {
 
     @Override
     public void delete() {
+        System.out.println(getAll());
+
         String inputname;
         int count;
         System.out.println("Choose which field want to change" + '\n' +
@@ -337,10 +343,11 @@ public class Service implements CreateReadUpdateDelete {
                 "2:Last Name" + '\n' +
                 "3:Company Name" + '\n' +
                 "4:PhoneNumber " + '\n');
+        System.out.print("Enter your choose: ");
         String choice = sc.nextLine();
         switch (choice) {
             case "1":
-                System.out.println("Enter First Name");
+                System.out.print("Enter First Name: ");
                 inputname = sc.nextLine();
                 count = getCount(mapContact, inputname);
                 if (count == 0) {
@@ -355,7 +362,7 @@ public class Service implements CreateReadUpdateDelete {
                 break;
 
             case "2":
-                System.out.println("Enter Last Name");
+                System.out.print("Enter Last Name: ");
                 inputname = sc.nextLine();
                 count = getCountLastname(mapContact, inputname);
                 if (count == 0) {
@@ -369,7 +376,7 @@ public class Service implements CreateReadUpdateDelete {
                 }
                 break;
             case "3":
-                System.out.println("Enter Company Name");
+                System.out.print("Enter Company Name: ");
                 inputname = sc.nextLine();
                 count = getCountCompanyName(mapContact, inputname);
                 if (count == 0) {
@@ -383,7 +390,7 @@ public class Service implements CreateReadUpdateDelete {
                 }
                 break;
             case "4":
-                System.out.println("Enter PhoneNumbers ");
+                System.out.print("Enter PhoneNumbers: ");
                 inputname = sc.nextLine();
                 count = getCountPhoneNumbers(mapContact, inputname);
                 if (count == 0) {
@@ -433,7 +440,7 @@ public class Service implements CreateReadUpdateDelete {
 
             if (map1.getValue().getFirstName().equals(s)) {
 
-                System.out.println("Enter new name");
+                System.out.print("Enter new name: ");
                 String newname = sc.nextLine();
 
                 map1.getValue().setFirstName(newname);
@@ -448,7 +455,7 @@ public class Service implements CreateReadUpdateDelete {
 
             if (map1.getValue().getLastName().equals(s)) {
 
-                System.out.println("Enter new name");
+                System.out.print("Enter new name: ");
                 String newname = sc.nextLine();
 
                 map1.getValue().setLastName(newname);
@@ -463,7 +470,7 @@ public class Service implements CreateReadUpdateDelete {
 
             if (map1.getValue().getCompany().equals(s)) {
 
-                System.out.println("Enter new name");
+                System.out.print("Enter new name: ");
                 String newname = sc.nextLine();
 
                 map1.getValue().setCompany(newname);
@@ -478,7 +485,7 @@ public class Service implements CreateReadUpdateDelete {
             if (map1.getValue().getPhoneNumbers().getNumber().equals(s)) {
 
 
-                System.out.println("Enter new phone number");
+                System.out.print("Enter new phone number: ");
                 String number = sc.nextLine();
 
                 map1.getValue().getPhoneNumbers().setNumber(number);
@@ -493,7 +500,7 @@ public class Service implements CreateReadUpdateDelete {
             if (map1.getValue().getEmail().getEmail().equals(s)) {
 
 
-                System.out.println("Enter new email");
+                System.out.print("Enter new email: ");
                 String email = sc.nextLine();
 
                 map1.getValue().getEmail().setEmail(email);
@@ -517,7 +524,7 @@ public class Service implements CreateReadUpdateDelete {
 
         sc.nextLine();
 
-        System.out.print("Enter new name");
+        System.out.print("Enter new name: ");
         String name = sc.nextLine();
 
         list1.get(index).setFirstName(name);
@@ -538,7 +545,7 @@ public class Service implements CreateReadUpdateDelete {
 
         sc.nextLine();
 
-        System.out.print("Enter new phone number");
+        System.out.print("Enter new phone number: ");
         String number = sc.nextLine();
         list1.get(index).getPhoneNumbers().setNumber(number);
 
@@ -559,7 +566,7 @@ public class Service implements CreateReadUpdateDelete {
 
         sc.nextLine();
 
-        System.out.print("Enter new name");
+        System.out.print("Enter new name: ");
         String name = sc.nextLine();
 
         list1.get(index - 1).setLastName((name));
@@ -579,7 +586,7 @@ public class Service implements CreateReadUpdateDelete {
 
         sc.nextLine();
 
-        System.out.print("Enter new name");
+        System.out.print("Enter new name: ");
         String name = sc.nextLine();
 
         list1.get(index).setCompany(name);
@@ -599,7 +606,7 @@ public class Service implements CreateReadUpdateDelete {
 
         sc.nextLine();
 
-        System.out.print("Enter new email");
+        System.out.print("Enter new email: ");
         String name = sc.nextLine();
 
         list1.get(index).getEmail().setEmail(name);
@@ -666,17 +673,23 @@ public class Service implements CreateReadUpdateDelete {
                 "2:Last Name" + '\n' +
                 "3:Company Name" + '\n' +
                 "4:PhoneNumber " + '\n' +
-                "5:Email ");
+                "5:Email "+ '\n' +
+                "6:Exit ");
+        System.out.print("Your choose: ");
         String answertype = sc.nextLine();
         String inputname;
 
 
         switch (answertype) {
             case "1":
-                System.out.println("Enter First Name");
+                System.out.print("Which First Name Want You Update: ");
                 inputname = sc.nextLine();
                 count = getCount(mapContact, inputname);
 
+                if(count == 0){
+                    System.out.println(ANSI_RED +"Can't find user "+ANSI_YELLOW);
+                    update();
+                }
                 if (count > 1) {
 
                     createListToChangeFirstName(inputname);
@@ -686,9 +699,13 @@ public class Service implements CreateReadUpdateDelete {
 
                 break;
             case "2":
-                System.out.println("Enter Last Name");
+                System.out.print("Which Last Name Want You Update: ");
                 inputname = sc.nextLine();
                 count = getCount(mapContact, inputname);
+                if(count == 0){
+                    System.out.println(ANSI_RED +"Can't find user "+ANSI_YELLOW);
+                    update();
+                }
                 if (count > 1) {
 
                     createListToChangeLastName(inputname);
@@ -698,9 +715,13 @@ public class Service implements CreateReadUpdateDelete {
 
                 break;
             case "3":
-                System.out.println("Enter Company Name");
+                System.out.print("Which Company Want You Update: ");
                 inputname = sc.nextLine();
                 count = getCount(mapContact, inputname);
+                if(count == 0){
+                    System.out.println(ANSI_RED +"Can't find user "+ANSI_YELLOW);
+                    update();
+                }
                 if (count > 1) {
 
                     createListToChangeCompanyName(inputname);
@@ -710,9 +731,13 @@ public class Service implements CreateReadUpdateDelete {
 
                 break;
             case "4":
-                System.out.println("Enter PhoneNumber");
+                System.out.print("Which PhoneNumber Want You Update: ");
                 inputname = sc.nextLine();
                 count = getCount(mapContact, inputname);
+                if(count == 0){
+                    System.out.println(ANSI_RED +"Can't find user "+ANSI_YELLOW);
+                    update();
+                }
                 if (count > 1) {
 
                     createListToChangePhoneNumber(inputname);
@@ -722,9 +747,13 @@ public class Service implements CreateReadUpdateDelete {
 
                 break;
             case "5":
-                System.out.println("Enter Email");
+                System.out.print("Which Email Want You Update: ");
                 inputname = sc.nextLine();
                 count = getCount(mapContact, inputname);
+                if(count == 0){
+                    System.out.println(ANSI_RED +"Can't find user "+ANSI_YELLOW);
+                    update();
+                }
                 if (count > 1) {
                     createListToChangeEmail(inputname);
 
@@ -733,10 +762,17 @@ public class Service implements CreateReadUpdateDelete {
                     changeEmail(inputname);
 
                 break;
+            case "6":
+                break;
             default:
                 update();
         }
 
+    }
+
+    @Override
+    public void exit() {
+        System.exit(0);
     }
 
 

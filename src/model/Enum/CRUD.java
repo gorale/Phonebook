@@ -2,7 +2,7 @@ package model.Enum;
 
 public enum CRUD {
 
-    CREATE,READE,UPDATE,DELETE,EXIT;
+    CREATE,READE,UPDATE,DELETE,SEARCH,EXIT;
 
     CRUD() {
     }
