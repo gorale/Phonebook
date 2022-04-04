@@ -1,6 +1,5 @@
 package main;
 
-import model.Contact;
 import service.ContactController;
 
 public class Main {

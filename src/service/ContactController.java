@@ -6,19 +6,17 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class ContactController {
-    Service service = new Service();
-    Scanner sc = new Scanner(System.in);
-    CRUD message;
-
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
-
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_YELLOW = "\u001B[33m";
     public static final String ANSI_BLUE = "\u001B[34m";
     public static final String ANSI_PURPLE = "\u001B[35m";
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
+    Service service = new Service();
+    Scanner sc = new Scanner(System.in);
+    CRUD message;
 
     public void start() {
 
@@ -29,7 +27,8 @@ public class ContactController {
                         "-CREATE" + '\n' +
                         "-READE" + '\n' +
                         "-UPDATE" + '\n' +
-                        "-DELETE");
+                        "-DELETE" + '\n' +
+                        "-EXIT");
                 //System.out.println("Enter valid action");
                 System.out.print("Your choose: ");
                 message = CRUD.valueOf(sc.nextLine().toUpperCase(Locale.ROOT));
@@ -59,6 +58,9 @@ public class ContactController {
                     break;
                 case DELETE:
                     service.delete();
+                    break;
+                case EXIT:
+                    service.exit();
                     break;
             }
 

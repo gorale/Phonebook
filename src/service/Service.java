@@ -9,8 +9,11 @@ import java.util.*;
 
 public class Service implements CreateReadUpdateDelete {
 
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
     Map<UUID, Contact> mapContact = new HashMap<>();
     Scanner sc = new Scanner(System.in);
+//    ContactController controller = new ContactController();
     String firstName;
     String lastName;
     String company;
@@ -21,11 +24,6 @@ public class Service implements CreateReadUpdateDelete {
     Contact.PhoneNumbers phoneNumbers;
     EmailType emailType;
     Contact.Email email;
-
-
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-
 
     public static boolean question() {
         String question;
@@ -42,19 +40,19 @@ public class Service implements CreateReadUpdateDelete {
             }
 
 
-                switch (question) {
-                    case "YES":
-                        return true;
-                    case "NO":
-                        break;
-                    default:
-                        question();
+            switch (question) {
+                case "YES":
+                    return true;
+                case "NO":
+                    break;
+                default:
+                    question();
 
-                }
-                break;
             }
-            return false;
+            break;
         }
+        return false;
+    }
 
 
     public static String answer() {
@@ -242,6 +240,7 @@ public class Service implements CreateReadUpdateDelete {
             }
         }
     }
+
     public void deleteLastName(String s) {
         for (Map.Entry<UUID, Contact> map : mapContact.entrySet()) {
             if (map.getValue().getLastName().equals(s)) {
@@ -264,6 +263,7 @@ public class Service implements CreateReadUpdateDelete {
 
         mapContact.values().remove(list1.get(index - 1));
     }
+
     public void createListToDeleteLastName(String inputlastname) {
         int index;
         ArrayList<Contact> list1 = new ArrayList<>();
@@ -296,13 +296,13 @@ public class Service implements CreateReadUpdateDelete {
                 System.out.println("Enter First Name");
                 inputname = sc.nextLine();
                 count = getCount(mapContact, inputname);
-                if(count==0){
-                    System.out.println(ANSI_RED+"Can't find user, enter other field"+ANSI_YELLOW);
+                if (count == 0) {
+                    System.out.println(ANSI_RED + "Can't find user, enter other field" + ANSI_YELLOW);
                     delete();
                 }
                 if (count == 1) {
                     deleteFirstName(inputname);
-                } else  {
+                } else {
                     createListToDeleteFirstName(inputname);
                 }
                 break;
@@ -311,13 +311,13 @@ public class Service implements CreateReadUpdateDelete {
                 System.out.println("Enter Last Name");
                 inputname = sc.nextLine();
                 count = getCountLastname(mapContact, inputname);
-                if(count==0){
-                    System.out.println(ANSI_RED+"Can't find user, enter other field"+ANSI_YELLOW);
+                if (count == 0) {
+                    System.out.println(ANSI_RED + "Can't find user, enter other field" + ANSI_YELLOW);
                     delete();
                 }
                 if (count == 1) {
                     deleteLastName(inputname);
-                } else  {
+                } else {
                     createListToDeleteLastName(inputname);
                 }
                 break;
@@ -339,16 +339,16 @@ public class Service implements CreateReadUpdateDelete {
         }
 */
 
-        for (Map.Entry<UUID, Contact> map : mapContact.entrySet()) {
-            if (map.getValue().getFirstName().equals(ph)) {
-                mapContact.remove(map.getKey());
-                break;
-
-
-            }
-
-
-        }*/
+//        for (Map.Entry<UUID, Contact> map : mapContact.entrySet()) {
+//            if (map.getValue().getFirstName().equals(ph)) {
+//                mapContact.remove(map.getKey());
+//                break;
+//
+//
+//            }
+//
+//
+//        }*/
     }
 
     public ArrayList<Contact> create(ArrayList list, String s) {
@@ -360,6 +360,7 @@ public class Service implements CreateReadUpdateDelete {
         }
         return list;
     }
+
     public ArrayList<Contact> createLastnameList(ArrayList list, String s) {
         for (Map.Entry<UUID, Contact> map : mapContact.entrySet()) {
 
@@ -566,6 +567,7 @@ public class Service implements CreateReadUpdateDelete {
         return count;
 
     }
+
     public int getCountLastname(Map<UUID, Contact> map, String s) {
         int count = 0;
         for (Map.Entry<UUID, Contact> map1 : mapContact.entrySet()) {
@@ -589,7 +591,8 @@ public class Service implements CreateReadUpdateDelete {
                 "2:Last Name" + '\n' +
                 "3:Company Name" + '\n' +
                 "4:PhoneNumber " + '\n' +
-                "5:Email ");
+                "5:Email "+ '\n' +
+                "6:Exit ");
         String answertype = sc.nextLine();
         String inputname;
 
@@ -656,8 +659,17 @@ public class Service implements CreateReadUpdateDelete {
                     changeEmail(inputname);
 
                 break;
+            case "6":
+                break;
 
 
+        }
+    }
+
+    @Override
+    public void exit(){
+        System.exit(2);
+    }
 }
 
 
