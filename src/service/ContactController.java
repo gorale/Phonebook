@@ -30,7 +30,7 @@ public class ContactController {
                         "-READE" + '\n' +
                         "-UPDATE" + '\n' +
                         "-DELETE");
-                //System.out.println("Enter valid action");
+
                 message = CRUD.valueOf(sc.nextLine().toUpperCase(Locale.ROOT));
             } catch (IllegalArgumentException e) {
                 continue;
@@ -58,6 +58,7 @@ public class ContactController {
                 case DELETE:
                     service.delete();
                     break;
+
             }
 
 
