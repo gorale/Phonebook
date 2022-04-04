@@ -14,10 +14,12 @@ public class Contact {
     private String company;
     private PhoneNumbers phoneNumbers;
     private Email email;
+
     public static final String ANSI_BLUE = "\u001B[34m";
     Map<UUID, Contact> mapContact = new HashMap<>();
 
     public Contact(String firstName, String lastName, String company, PhoneNumbers phoneNumbers, Email email) {
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.company = company;
