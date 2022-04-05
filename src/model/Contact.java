@@ -3,37 +3,28 @@ package model;
 import model.Enum.EmailType;
 import model.Enum.NumberType;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+
 
 public class Contact {
     private String firstName;
     private String lastName;
     private String company;
-    private PhoneNumbers phoneNumbers;
+    private PhoneNumber phoneNumber;
     private Email email;
 
     public static final String ANSI_BLUE = "\u001B[34m";
-    Map<UUID, Contact> mapContact = new HashMap<>();
 
-    public Contact(String firstName, String lastName, String company, PhoneNumbers phoneNumbers, Email email) {
+
+    public Contact(String firstName, String lastName, String company, PhoneNumber phoneNumber, Email email) {
 
         this.firstName = firstName;
         this.lastName = lastName;
         this.company = company;
-        this.phoneNumbers = phoneNumbers;
+        this.phoneNumber = phoneNumber;
         this.email = email;
     }
 
-    public Contact(String firstName, PhoneNumbers phoneNumbers) {
-        this.firstName = firstName;
-        this.phoneNumbers = phoneNumbers;
-    }
 
-    public Contact() {
-        super();
-    }
 
     public String getFirstName() {
         return firstName;
@@ -59,12 +50,12 @@ public class Contact {
         this.company = company;
     }
 
-    public PhoneNumbers getPhoneNumbers() {
-        return phoneNumbers;
+    public PhoneNumber getPhoneNumbers() {
+        return phoneNumber;
     }
 
-    public void setPhoneNumbers(PhoneNumbers phoneNumbers) {
-        this.phoneNumbers = phoneNumbers;
+    public void setPhoneNumbers(PhoneNumber phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public Email getEmail() {
@@ -77,10 +68,11 @@ public class Contact {
 
     @Override
     public String toString() {
+
        return ANSI_BLUE+"Contact\t|" + (firstName.equals("")?"name passing":firstName)  +
                 "\t|"+ (lastName.equals("")?"last name passing":lastName) +
                 "\t|"+(company.equals("")?"company name passing":company)+"\t|"
-                +(phoneNumbers.number.equals("")?"phone number passing":phoneNumbers.numberType+": "+phoneNumbers.number)+
+                +(phoneNumber==null?"phone number passing":phoneNumber.numberType+": "+phoneNumber.number)+
                 "\t|"+(email.email == null?"email passing":email.emailType+": "+email.email);
 
 
@@ -88,16 +80,16 @@ public class Contact {
     }
 
 
-    public static class PhoneNumbers {
+    public static class PhoneNumber {
         NumberType numberType;
         private String number;
 
-        public PhoneNumbers(NumberType numberType, String number) {
+        public PhoneNumber(NumberType numberType, String number) {
             this.numberType = numberType;
             this.number = number;
         }
 
-        public PhoneNumbers() {
+        public PhoneNumber() {
 
         }
 

@@ -1,24 +1,155 @@
 package service;
 
 import model.Contact;
+import model.Enum.EmailType;
+import model.Enum.NumberType;
 import validation.ContactValidation;
 
 import java.util.*;
 
 public class ServiceController {
-   private static Map<UUID, Contact> mapContact = new HashMap<>();
-   private static Scanner sc = new Scanner(System.in);
-    ContactValidation cn = new ContactValidation();
-
-    private UUID uuid;
-
-
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_YELLOW = "\u001B[33m";
-    private static ServicePhoneBook sb=new ServicePhoneBook();
+
+    private static ContactValidation cn = new ContactValidation();
+    private static Scanner sc = new Scanner(System.in);
+    private static ServicePhoneBook sb = new ServicePhoneBook();
+ ///   private static Map<UUID, Contact> mapContact=sb.mapContact;
+
+    private static UUID uuid;
+  //  private static ServicePhoneBook sb = new ServicePhoneBook();
+
+
+
+    /**
+     * insert firsName
+     *
+     * @return String
+     */
+    public static String insertFirstName() {
+        String firstName;
+        System.out.print("Enter firstname: ");
+        while (true) {
+            firstName = sc.nextLine();
+
+            if (cn.isValidFirstName(firstName)) {
+                break;
+            } else {
+                System.out.print(ANSI_RED + "Enter valid firstname: ");
+            }
+        }
+        return firstName;
+
+    }
+
+    public static String insertLastName() {
+
+        System.out.println("Do you want to enter lastname?: ");
+        String lastName = Query.answer();
+        return lastName;
+    }
+
+    public static String insertCompany() {
+        System.out.println("Do you want to enter company name?: ");
+        String company = Query.answer();
+        return company;
+    }
+
+    public static Contact.PhoneNumber insertPhoneNumber() {
+        NumberType numberType;
+        Contact.PhoneNumber phoneNumber;
+        String number;
+        while (true) {
+
+
+            try {
+                System.out.println(ANSI_YELLOW + "Choose phone number type-" + '\n' + "-MOBILE" + '\n' +
+                        "-HOME" + '\n' +
+                        "-SCHOOL" + '\n' +
+                        "-WORK");
+                System.out.print("Enter your choose: ");
+
+                numberType = NumberType.valueOf(sc.nextLine().toUpperCase(Locale.ROOT));
+            } catch (IllegalArgumentException e) {
+                System.out.print(ANSI_RED + "Enter valid type: ");
+                continue;
+
+
+            }
+
+            System.out.print("Enter phone number: ");
+
+            while (true) {
+                number = sc.nextLine();
+
+                if (cn.isValidPhoneNumber(number)) {
+                    break;
+
+                } else {
+                    System.out.print(ANSI_RED + "Enter valid phone number: ");
+                }
+            }
+
+
+            switch (numberType) {
+                case WORK:
+                case MOBILE:
+                case HOME:
+                case SCHOOL:
+                    return phoneNumber = new Contact.PhoneNumber(numberType, number);
+
+                default:
+                    return phoneNumber = new Contact.PhoneNumber(NumberType.OTHER, number);
+            }
+        }
+    }
+
+    public static Contact.Email insertEmail() {
+        String myEmail;
+        EmailType emailType;
+        Contact.Email email;
+        uuid = UUID.randomUUID();
+        while (true) {
+            try {
+                System.out.println(ANSI_YELLOW + "Choose email type-" + '\n' +
+                        "-GMAIL" + '\n' +
+                        "-EMAIL" + '\n' +
+                        "-ICLOUD" + '\n' +
+                        "-OTHER");
+                System.out.print("Enter your choose: ");
+                emailType = EmailType.valueOf(sc.nextLine().toUpperCase(Locale.ROOT));
+            } catch (IllegalArgumentException e) {
+                System.out.print(ANSI_RED + "Enter valid type: ");
+                continue;
+            }
+            System.out.print("Your Email: ");
+            while (true) {
+                myEmail = sc.nextLine();
+
+                if (cn.isValidEmail(myEmail, emailType)) {
+                    break;
+                } else
+                    System.out.print(ANSI_RED + "Enter valid email: ");
+            }
+            switch (emailType) {
+                case GMAIL:
+                case EMAIL:
+                case ICLOUD:
+                   return email = new Contact.Email(emailType, myEmail);
+
+                default:
+                   return email = new Contact.Email(EmailType.OTHER, myEmail);
+            }
+        }
+
+
+
+    }
+
+
 
     public static ArrayList<Contact> create(ArrayList list, String s) {
-        for (Map.Entry<UUID, Contact> map : mapContact.entrySet()) {
+        for (Map.Entry<UUID, Contact> map : ServicePhoneBook.getMapContact().entrySet()) {
 
             if (map.getValue().getFirstName().equals(s)) {
                 list.add(map.getValue());
@@ -26,8 +157,9 @@ public class ServiceController {
         }
         return list;
     }
+
     public static ArrayList<Contact> createLastnameList(ArrayList list, String s) {
-        for (Map.Entry<UUID, Contact> map : mapContact.entrySet()) {
+        for (Map.Entry<UUID, Contact> map : ServicePhoneBook.getMapContact().entrySet()) {
 
             if (map.getValue().getLastName().equals(s)) {
                 list.add(map.getValue());
@@ -43,7 +175,7 @@ public class ServiceController {
     }
 
     public static void changeFirstName(String s) {
-        for (Map.Entry<UUID, Contact> map1 : mapContact.entrySet()) {
+        for (Map.Entry<UUID, Contact> map1 : ServicePhoneBook.getMapContact().entrySet()) {
 
             if (map1.getValue().getFirstName().equals(s)) {
 
@@ -52,12 +184,13 @@ public class ServiceController {
 
                 map1.getValue().setFirstName(newname);
             }
-            System.out.println(mapContact.values());
+            System.out.println(ServicePhoneBook.getMapContact().values());
         }
 
     }
+
     public static void changeLastName(String s) {
-        for (Map.Entry<UUID, Contact> map1 : mapContact.entrySet()) {
+        for (Map.Entry<UUID, Contact> map1 : ServicePhoneBook.getMapContact().entrySet()) {
 
             if (map1.getValue().getLastName().equals(s)) {
 
@@ -66,13 +199,13 @@ public class ServiceController {
 
                 map1.getValue().setLastName(newname);
             }
-            System.out.println(mapContact.values());
+            System.out.println(ServicePhoneBook.getMapContact().values());
         }
 
     }
 
     public static void changeCompanyName(String s) {
-        for (Map.Entry<UUID, Contact> map1 : mapContact.entrySet()) {
+        for (Map.Entry<UUID, Contact> map1 : ServicePhoneBook.getMapContact().entrySet()) {
 
             if (map1.getValue().getCompany().equals(s)) {
 
@@ -81,13 +214,13 @@ public class ServiceController {
 
                 map1.getValue().setCompany(newname);
             }
-            System.out.println(mapContact.values());
+            System.out.println(ServicePhoneBook.getMapContact().values());
         }
 
     }
 
     public static void changePhoneNumber(String s) {
-        for (Map.Entry<UUID, Contact> map1 : mapContact.entrySet()) {
+        for (Map.Entry<UUID, Contact> map1 : ServicePhoneBook.getMapContact().entrySet()) {
             if (map1.getValue().getPhoneNumbers().getNumber().equals(s)) {
 
 
@@ -96,13 +229,13 @@ public class ServiceController {
 
                 map1.getValue().getPhoneNumbers().setNumber(number);
             }
-            System.out.println(mapContact.values());
+            System.out.println(ServicePhoneBook.getMapContact().values());
         }
 
     }
 
     public static void changeEmail(String s) {
-        for (Map.Entry<UUID, Contact> map1 : mapContact.entrySet()) {
+        for (Map.Entry<UUID, Contact> map1 : ServicePhoneBook.getMapContact().entrySet()) {
             if (map1.getValue().getEmail().getEmail().equals(s)) {
 
 
@@ -111,10 +244,11 @@ public class ServiceController {
 
                 map1.getValue().getEmail().setEmail(email);
             }
-            System.out.println(mapContact.values());
+            System.out.println(ServicePhoneBook.getMapContact().values());
         }
 
     }
+
     public static void createListToChangeFirstName(String inputfirstname) {
         int index;
 
@@ -131,9 +265,9 @@ public class ServiceController {
         System.out.print("Enter new name: ");
         String name = sc.nextLine();
 
-        list1.get(index).setFirstName(name);
+        list1.get(index-1).setFirstName(name);
 
-        System.out.println(mapContact.values());
+        System.out.println(ServicePhoneBook.getMapContact().values());
 
 
     }
@@ -151,10 +285,10 @@ public class ServiceController {
 
         System.out.print("Enter new phone number: ");
         String number = sc.nextLine();
-        list1.get(index).getPhoneNumbers().setNumber(number);
+        list1.get(index-1).getPhoneNumbers().setNumber(number);
 
 
-        System.out.println(mapContact.values());
+        System.out.println(ServicePhoneBook.getMapContact().values());
 
 
     }
@@ -174,7 +308,7 @@ public class ServiceController {
         String name = sc.nextLine();
 
         list1.get(index - 1).setLastName((name));
-        System.out.println(mapContact);
+        System.out.println(ServicePhoneBook.getMapContact());
     }
 
     public static void createListToChangeCompanyName(String inputfirstname) {
@@ -193,9 +327,9 @@ public class ServiceController {
         System.out.print("Enter new name: ");
         String name = sc.nextLine();
 
-        list1.get(index).setCompany(name);
+        list1.get(index-1).setCompany(name);
 
-        System.out.println(mapContact.values());
+        System.out.println(ServicePhoneBook.getMapContact().values());
 
 
     }
@@ -213,43 +347,46 @@ public class ServiceController {
         System.out.print("Enter new email: ");
         String name = sc.nextLine();
 
-        list1.get(index).getEmail().setEmail(name);
-        System.out.println(mapContact);
+        list1.get(index-1).getEmail().setEmail(name);
+        System.out.println(ServicePhoneBook.getMapContact());
     }
+
     public static void deleteFirstName(String s) {
-        for (Map.Entry<UUID, Contact> map : mapContact.entrySet()) {
+        for (Map.Entry<UUID, Contact> map : ServicePhoneBook.getMapContact().entrySet()) {
             if (map.getValue().getFirstName().equals(s)) {
-                mapContact.remove(map.getKey());
+                ServicePhoneBook.getMapContact().remove(map.getKey());
                 break;
             }
         }
     }
 
     public static void deleteLastName(String s) {
-        for (Map.Entry<UUID, Contact> map : mapContact.entrySet()) {
+        for (Map.Entry<UUID, Contact> map : ServicePhoneBook.getMapContact().entrySet()) {
             if (map.getValue().getLastName().equals(s)) {
-                mapContact.remove(map.getKey());
+                ServicePhoneBook.getMapContact().remove(map.getKey());
                 break;
             }
         }
     }
+
     public static void deleteCompanyName(String s) {
-        for (Map.Entry<UUID, Contact> map : mapContact.entrySet()) {
+        for (Map.Entry<UUID, Contact> map : ServicePhoneBook.getMapContact().entrySet()) {
             if (map.getValue().getCompany().equals(s)) {
-                mapContact.remove(map.getKey());
+                ServicePhoneBook.getMapContact().remove(map.getKey());
                 break;
             }
         }
     }
 
     public static void deletePhoneNumber(String s) {
-        for (Map.Entry<UUID, Contact> map : mapContact.entrySet()) {
+        for (Map.Entry<UUID, Contact> map : ServicePhoneBook.getMapContact().entrySet()) {
             if (map.getValue().getPhoneNumbers().getNumber().equals(s)) {
-                mapContact.remove(map.getKey());
+                ServicePhoneBook.getMapContact().remove(map.getKey());
                 break;
             }
         }
     }
+
     public static void createListToDeletePhoneNumbers(String phonenumbers) {
         int index;
         ArrayList<Contact> list1 = new ArrayList<>();
@@ -261,7 +398,7 @@ public class ServiceController {
 
         sc.nextLine();
 
-        mapContact.values().remove(list1.get(index - 1));
+        ServicePhoneBook.getMapContact().values().remove(list1.get(index - 1));
     }
 
     public static void createListToDeleteFirstName(String inputfirstname) {
@@ -275,8 +412,9 @@ public class ServiceController {
 
         sc.nextLine();
 
-        mapContact.values().remove(list1.get(index - 1));
+        ServicePhoneBook.getMapContact().values().remove(list1.get(index - 1));
     }
+
     public static void createListToDeleteCompanyName(String companyName) {
         int index;
         ArrayList<Contact> list1 = new ArrayList<>();
@@ -288,7 +426,7 @@ public class ServiceController {
 
         sc.nextLine();
 
-        mapContact.values().remove(list1.get(index - 1));
+        ServicePhoneBook.getMapContact().values().remove(list1.get(index - 1));
     }
 
     public static void createListToDeleteLastName(String inputlastname) {
@@ -302,12 +440,13 @@ public class ServiceController {
 
         sc.nextLine();
 
-        mapContact.values().remove(list1.get(index - 1));
+        ServicePhoneBook.getMapContact().values().remove(list1.get(index - 1));
     }
-    public static void deletebyfirstname() {
+
+    public static void deleteByfirstname() {
         System.out.print("Enter First Name: ");
         String inputname = sc.nextLine();
-        int count = getCountFirstName(mapContact, inputname);
+        int count = getCountFirstName(ServicePhoneBook.getMapContact(), inputname);
         if (count == 0) {
             System.out.println(ANSI_RED + "Can't find user, enter other field" + ANSI_YELLOW);
             sb.delete();
@@ -319,13 +458,13 @@ public class ServiceController {
         }
     }
 
-    public static void deletebyLastName() {
+    public static void deleteByLastName() {
         System.out.print("Enter Last Name: ");
         String inputname = sc.nextLine();
-        int count = getCountLastname(mapContact, inputname);
+        int count = getCountLastname(ServicePhoneBook.getMapContact(), inputname);
         if (count == 0) {
             System.out.println(ANSI_RED + "Can't find user, enter other field" + ANSI_YELLOW);
-           sb.delete();
+            sb.delete();
         }
         if (count == 1) {
             deleteLastName(inputname);
@@ -333,10 +472,11 @@ public class ServiceController {
             createListToDeleteLastName(inputname);
         }
     }
-    public static void deletebyCompanyName() {
+
+    public static void deleteByCompanyName() {
         System.out.print("Enter Company Name: ");
         String inputname = sc.nextLine();
-        int count = getCountCompanyName(mapContact, inputname);
+        int count = getCountCompanyName(ServicePhoneBook.getMapContact(), inputname);
         if (count == 0) {
             System.out.println(ANSI_RED + "Can't find user, enter other field" + ANSI_YELLOW);
             sb.delete();
@@ -348,10 +488,10 @@ public class ServiceController {
         }
     }
 
-    public static void deletebyPhoneNumber() {
+    public static void deleteByPhoneNumber() {
         System.out.print("Enter PhoneNumbers: ");
         String inputname = sc.nextLine();
-        int count = getCountPhoneNumbers(mapContact, inputname);
+        int count = getCountPhoneNumbers(ServicePhoneBook.getMapContact(), inputname);
         if (count == 0) {
             System.out.println(ANSI_RED + "Can't find user, enter other field" + ANSI_YELLOW);
             sb.delete();
@@ -363,11 +503,9 @@ public class ServiceController {
         }
     }
 
-
-
     public static int getCountFirstName(Map<UUID, Contact> map, String s) {
         int count = 0;
-        for (Map.Entry<UUID, Contact> map1 : mapContact.entrySet()) {
+        for (Map.Entry<UUID, Contact> map1 : ServicePhoneBook.getMapContact().entrySet()) {
 
             if (map1.getValue().getFirstName().equals(s)) {
                 count++;
@@ -376,9 +514,10 @@ public class ServiceController {
         return count;
 
     }
+
     public static int getCountLastname(Map<UUID, Contact> map, String s) {
         int count = 0;
-        for (Map.Entry<UUID, Contact> map1 : mapContact.entrySet()) {
+        for (Map.Entry<UUID, Contact> map1 : ServicePhoneBook.getMapContact().entrySet()) {
 
             if (map1.getValue().getLastName().equals(s)) {
                 count++;
@@ -387,9 +526,10 @@ public class ServiceController {
         return count;
 
     }
+
     public static int getCountPhoneNumbers(Map<UUID, Contact> map, String s) {
         int count = 0;
-        for (Map.Entry<UUID, Contact> map1 : mapContact.entrySet()) {
+        for (Map.Entry<UUID, Contact> map1 : ServicePhoneBook.getMapContact().entrySet()) {
 
             if (map1.getValue().getPhoneNumbers().getNumber().equals(s)) {
                 count++;
@@ -397,9 +537,10 @@ public class ServiceController {
         }
         return count;
     }
+
     public static int getCountCompanyName(Map<UUID, Contact> map, String s) {
         int count = 0;
-        for (Map.Entry<UUID, Contact> map1 : mapContact.entrySet()) {
+        for (Map.Entry<UUID, Contact> map1 : ServicePhoneBook.getMapContact().entrySet()) {
 
             if (map1.getValue().getCompany().equals(s)) {
                 count++;
@@ -408,9 +549,10 @@ public class ServiceController {
         return count;
 
     }
+
     public static int getCountEmail(Map<UUID, Contact> map, String s) {
         int count = 0;
-        for (Map.Entry<UUID, Contact> map1 : mapContact.entrySet()) {
+        for (Map.Entry<UUID, Contact> map1 : ServicePhoneBook.getMapContact().entrySet()) {
 
             if (map1.getValue().getEmail().getEmail().equals(s)) {
                 count++;
@@ -420,10 +562,11 @@ public class ServiceController {
 
     }
 
-    public  static void updateByFirstName() {
+    public static void updateByFirstName() {
         System.out.print("Which First Name Want You Update: ");
         String inputname = sc.nextLine();
-        int count =getCountFirstName(mapContact, inputname);
+        System.out.println(ServicePhoneBook.getMapContact());
+        int count = getCountFirstName(ServicePhoneBook.getMapContact(), inputname);
 
         if (count == 0) {
             System.out.println(ANSI_RED + "Can't find user " + ANSI_YELLOW);
@@ -434,28 +577,29 @@ public class ServiceController {
             createListToChangeFirstName(inputname);
 
         } else
-           changeFirstName(inputname);
+            changeFirstName(inputname);
     }
 
     public static void updateByLastName() {
         System.out.print("Which Last Name Want You Update: ");
         String inputname = sc.nextLine();
-        int count = getCountLastname(mapContact, inputname);
+        int count = getCountLastname(ServicePhoneBook.getMapContact(), inputname);
         if (count == 0) {
             System.out.println(ANSI_RED + "Can't find user " + ANSI_YELLOW);
             sb.update();
         }
         if (count > 1) {
 
-           createListToChangeLastName(inputname);
+            createListToChangeLastName(inputname);
 
         } else
             changeLastName(inputname);
     }
+
     public static void updateByCompanyName() {
         System.out.print("Which Company Want You Update: ");
         String inputname = sc.nextLine();
-        int count = getCountCompanyName(mapContact, inputname);
+        int count = getCountCompanyName(ServicePhoneBook.getMapContact(), inputname);
         if (count == 0) {
             System.out.println(ANSI_RED + "Can't find user " + ANSI_YELLOW);
             sb.update();
@@ -471,7 +615,7 @@ public class ServiceController {
     public static void updateByPhoneNumber() {
         System.out.print("Which PhoneNumber Want You Update: ");
         String inputname = sc.nextLine();
-        int count = getCountPhoneNumbers(mapContact, inputname);
+        int count = getCountPhoneNumbers(ServicePhoneBook.getMapContact(), inputname);
         if (count == 0) {
             System.out.println(ANSI_RED + "Can't find user " + ANSI_YELLOW);
             sb.update();
@@ -483,10 +627,11 @@ public class ServiceController {
         } else
             changePhoneNumber(inputname);
     }
+
     public static void updateByEmail() {
         System.out.print("Which Email Want You Update: ");
         String inputname = sc.nextLine();
-        int count = getCountEmail(mapContact, inputname);
+        int count = getCountEmail(ServicePhoneBook.getMapContact(), inputname);
         if (count == 0) {
             System.out.println(ANSI_RED + "Can't find user " + ANSI_YELLOW);
             sb.update();
@@ -498,7 +643,5 @@ public class ServiceController {
         } else
             changeEmail(inputname);
     }
-
-
 
 }
