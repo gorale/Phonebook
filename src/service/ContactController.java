@@ -14,7 +14,7 @@ public class ContactController {
     public static final String ANSI_PURPLE = "\u001B[35m";
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
-    Service service = new Service();
+    ServicePhoneBook service = new ServicePhoneBook();
     Scanner sc = new Scanner(System.in);
     CRUD message;
 
@@ -47,7 +47,7 @@ public class ContactController {
                         System.out.println(service.getAll());
                     }
 
-                    if (Service.question()) {
+                    if (ServicePhoneBook.question()) {
                         System.out.print("search first name: ");
                         String firstname = sc.nextLine();
                         service.get(firstname);
