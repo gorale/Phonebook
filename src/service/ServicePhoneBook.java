@@ -25,6 +25,7 @@ public class ServicePhoneBook implements CreateReadUpdateDelete {
 
         Contact contact = new Contact(firstName, lastName, company, phoneNumber, email);
         mapContact.put(uuid, contact);
+
         return contact;
 
     }
