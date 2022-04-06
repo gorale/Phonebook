@@ -2,6 +2,8 @@ package service;
 
 import model.Contact;
 
+import java.io.IOException;
+
 public interface CreateReadUpdateDelete {
 
     Contact add();
@@ -14,7 +16,7 @@ public interface CreateReadUpdateDelete {
 
     void update();
 
-    void exit();
+    void exit() throws IOException;
 
 
 }

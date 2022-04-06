@@ -4,6 +4,7 @@ import model.Enum.CRUD;
 import service.Query;
 import service.ServicePhoneBook;
 
+import java.io.IOException;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -36,7 +37,7 @@ public class Menu {
         return choice;
     }
 
-    public static void menu() {
+    public static void menu() throws IOException {
         Scanner sc = new Scanner(System.in);
         ServicePhoneBook service = new ServicePhoneBook();
 

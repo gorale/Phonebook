@@ -177,15 +177,37 @@ public class ServiceController {
     public static void changeFirstName(String s) {
         for (Map.Entry<UUID, Contact> map1 : ServicePhoneBook.getMapContact().entrySet()) {
 
-            if (map1.getValue().getFirstName().equals(s)) {
+            if(map1.getValue().getFirstName().equals(s)) {
+                System.out.println("What can you update" +'\n'+
+                        "1:FirstName"+'\n'+
+                        "2:LastName"+'\n'+
+                        "3:CompanyName"+'\n'+
+                        "4:PhoneNumber"+'\n');
+                String s1=sc.nextLine();
+                switch (s1){
+                    case "1":System.out.print("Enter new First Name: ");
+                        String newfirstname = sc.nextLine();
+                        map1.getValue().setFirstName(newfirstname);
+                        break;
+                    case "2":System.out.print("Enter new Last Name: ");
+                        String newlastname = sc.nextLine();
+                        map1.getValue().setLastName(newlastname);
+                        break;
+                    case "3":System.out.print("Enter new Company name: ");
+                        String newcompanyname = sc.nextLine();
+                        map1.getValue().setCompany(newcompanyname);
+                        break;
+                    case "4":System.out.print("Enter new phonenumber: ");
+                        String newphonenumber = sc.nextLine();
+                        map1.getValue().getPhoneNumbers().setNumber(newphonenumber);
+                        break;
 
-                System.out.print("Enter new name: ");
-                String newname = sc.nextLine();
+                }
 
-                map1.getValue().setFirstName(newname);
             }
-            System.out.println(ServicePhoneBook.getMapContact().values());
+
         }
+        System.out.println(ServicePhoneBook.getMapContact().values());
 
     }
 
