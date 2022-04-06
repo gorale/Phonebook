@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class ServicePhoneBook implements CreateReadUpdateDelete {
-    public static final String file="C:\\Users\\User\\IdeaProjects\\Phonebook\\src\\db\\contact.txt";
+    public static final String file="C:\\Users\\Lusine\\IdeaProjects\\Phonebook\\src\\db\\contact.txt";
 
     private static Map<UUID, Contact> mapContact = new HashMap<>();
 

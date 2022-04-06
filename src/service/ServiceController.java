@@ -188,85 +188,113 @@ public class ServiceController {
                     case "1":System.out.print("Enter new First Name: ");
                         String newfirstname = sc.nextLine();
                         map1.getValue().setFirstName(newfirstname);
-                        break;
+                        return;
                     case "2":System.out.print("Enter new Last Name: ");
                         String newlastname = sc.nextLine();
                         map1.getValue().setLastName(newlastname);
-                        break;
+                        return;
                     case "3":System.out.print("Enter new Company name: ");
                         String newcompanyname = sc.nextLine();
                         map1.getValue().setCompany(newcompanyname);
-                        break;
+                        return;
                     case "4":System.out.print("Enter new phonenumber: ");
                         String newphonenumber = sc.nextLine();
                         map1.getValue().getPhoneNumbers().setNumber(newphonenumber);
-                        break;
+                        return;
 
                 }
 
             }
 
         }
-        System.out.println(ServicePhoneBook.getMapContact().values());
+        for (Contact item : ServicePhoneBook.getMapContact().values()){
+            if(s.equals(item.getFirstName())){
+                System.out.println(item);
+            }
+        }
 
     }
 
     public static void changeLastName(String s) {
+        String newName = "";
         for (Map.Entry<UUID, Contact> map1 : ServicePhoneBook.getMapContact().entrySet()) {
 
             if (map1.getValue().getLastName().equals(s)) {
 
                 System.out.print("Enter new name: ");
-                String newname = sc.nextLine();
+                newName = sc.nextLine();
 
-                map1.getValue().setLastName(newname);
+                map1.getValue().setLastName(newName);
             }
-            System.out.println(ServicePhoneBook.getMapContact().values());
         }
+        for (Contact item : ServicePhoneBook.getMapContact().values()){
+            if(newName.equals(item.getLastName())){
+                System.out.println(item);
+            }
+        }
+
 
     }
 
     public static void changeCompanyName(String s) {
+        String newName = "";
         for (Map.Entry<UUID, Contact> map1 : ServicePhoneBook.getMapContact().entrySet()) {
 
             if (map1.getValue().getCompany().equals(s)) {
 
                 System.out.print("Enter new name: ");
-                String newname = sc.nextLine();
+                newName = sc.nextLine();
 
-                map1.getValue().setCompany(newname);
+                map1.getValue().setCompany(newName);
             }
-            System.out.println(ServicePhoneBook.getMapContact().values());
+
+        }
+        for (Contact item : ServicePhoneBook.getMapContact().values()){
+            if(newName.equals(item.getCompany())){
+                System.out.println(item);
+            }
         }
 
     }
 
     public static void changePhoneNumber(String s) {
+        String number = "";
         for (Map.Entry<UUID, Contact> map1 : ServicePhoneBook.getMapContact().entrySet()) {
             if (map1.getValue().getPhoneNumbers().getNumber().equals(s)) {
 
 
                 System.out.print("Enter new phone number: ");
-                String number = sc.nextLine();
+                number = sc.nextLine();
 
                 map1.getValue().getPhoneNumbers().setNumber(number);
             }
-            System.out.println(ServicePhoneBook.getMapContact().values());
+
+        }
+        for (Contact item : ServicePhoneBook.getMapContact().values()){
+            if(number.equals(item.getPhoneNumbers().getNumber())){
+                System.out.println(item);
+            }
         }
 
     }
 
     public static void changeEmail(String s) {
+        String email = "";
         for (Map.Entry<UUID, Contact> map1 : ServicePhoneBook.getMapContact().entrySet()) {
             if (map1.getValue().getEmail().getEmail().equals(s)) {
 
 
                 System.out.print("Enter new email: ");
-                String email = sc.nextLine();
+                email = sc.nextLine();
 
                 map1.getValue().getEmail().setEmail(email);
             }
-            System.out.println(ServicePhoneBook.getMapContact().values());
+
+        }
+        for (Contact item : ServicePhoneBook.getMapContact().values()){
+            if(email.equals(item.getEmail().getEmail())){
+                System.out.println(item);
+            }
         }
 
     }
@@ -289,7 +317,11 @@ public class ServiceController {
 
         list1.get(index-1).setFirstName(name);
 
-        System.out.println(ServicePhoneBook.getMapContact().values());
+        for (Contact item : ServicePhoneBook.getMapContact().values()){
+            if(name.equals(item.getFirstName())){
+                System.out.println(item);
+            }
+        }
 
 
     }
@@ -587,7 +619,8 @@ public class ServiceController {
     public static void updateByFirstName() {
         System.out.print("Which First Name Want You Update: ");
         String inputname = sc.nextLine();
-        System.out.println(ServicePhoneBook.getMapContact());
+
+
         int count = getCountFirstName(ServicePhoneBook.getMapContact(), inputname);
 
         if (count == 0) {
@@ -598,8 +631,14 @@ public class ServiceController {
 
             createListToChangeFirstName(inputname);
 
-        } else
+        } else {
+            for (Contact item : ServicePhoneBook.getMapContact().values()){
+                if(inputname.equals(item.getFirstName())){
+                    System.out.println(item);
+                }
+            }
             changeFirstName(inputname);
+        }
     }
 
     public static void updateByLastName() {
@@ -614,8 +653,14 @@ public class ServiceController {
 
             createListToChangeLastName(inputname);
 
-        } else
+        } else {
+            for (Contact item : ServicePhoneBook.getMapContact().values()){
+                if(inputname.equals(item.getLastName())){
+                    System.out.println(item);
+                }
+            }
             changeLastName(inputname);
+        }
     }
 
     public static void updateByCompanyName() {
@@ -630,8 +675,14 @@ public class ServiceController {
 
             createListToChangeCompanyName(inputname);
 
-        } else
+        } else {
+            for (Contact item : ServicePhoneBook.getMapContact().values()){
+                if(inputname.equals(item.getCompany())){
+                    System.out.println(item);
+                }
+            }
             changeCompanyName(inputname);
+        }
     }
 
     public static void updateByPhoneNumber() {
@@ -646,8 +697,15 @@ public class ServiceController {
 
             createListToChangePhoneNumber(inputname);
 
-        } else
+        } else{
+
+            for (Contact item : ServicePhoneBook.getMapContact().values()){
+                if(inputname.equals(item.getPhoneNumbers().getNumber())){
+                    System.out.println(item);
+                }
+            }
             changePhoneNumber(inputname);
+        }
     }
 
     public static void updateByEmail() {
@@ -662,8 +720,14 @@ public class ServiceController {
             createListToChangeEmail(inputname);
 
 
-        } else
+        } else {
+            for (Contact item : ServicePhoneBook.getMapContact().values()){
+                if(inputname.equals(item.getEmail().getEmail())){
+                    System.out.println(item);
+                }
+            }
             changeEmail(inputname);
+        }
     }
 
 }

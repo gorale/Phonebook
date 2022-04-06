@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 public class ContactController  {
-    public static final String file="C:\\Users\\User\\IdeaProjects\\Phonebook\\src\\db\\contact.txt";
+    public static final String file="C:\\Users\\Lusine\\IdeaProjects\\Phonebook\\src\\db\\contact.txt";
     public void start() throws IOException {
 
         FileReader fr=new FileReader(file);
