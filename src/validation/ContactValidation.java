@@ -8,27 +8,28 @@ import java.util.regex.Pattern;
 public class ContactValidation {
 
     private static final Pattern PATTERN_GLOBAL_EMAIL = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
+    private static final Pattern PATTERN_NAME = Pattern.compile("^[A-Za-z0-9+_.-]+$");
 
 
     public boolean isValidFirstName(String firstName) {
         if (firstName == null || firstName.length() == 0) {
             return false;
         }
-        return (firstName.length() >= 3 && firstName.length() <= 20);
+        return ((firstName.length() >= 3 && firstName.length() <= 20)) && firstName.matches(PATTERN_NAME.pattern());
     }
 
     public boolean isValidLastName(String lastName) {
         if (lastName == null || lastName.length() == 0) {
             return false;
         }
-        return (lastName.length() >= 3 && lastName.length() <= 20);
+        return (lastName.length() >= 3 && lastName.length() <= 20)&& lastName.matches(PATTERN_NAME.pattern());
     }
 
     public boolean isValidItCompanyName(String company) {
         if (company == null || company.length() == 0) {
             return false;
         }
-        return (company.length() >= 3 && company.length() <= 20);
+        return (company.length() >= 3 && company.length() <= 20) && company.matches(PATTERN_NAME.pattern());
     }
 
     public boolean isValidPhoneNumber(String phoneNumber) {

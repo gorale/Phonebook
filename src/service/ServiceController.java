@@ -35,7 +35,7 @@ public class ServiceController {
             if (cn.isValidFirstName(firstName)) {
                 break;
             } else {
-                System.out.print(ANSI_RED + "Enter valid firstname: ");
+                System.out.print(ANSI_RED + "Enter valid firstname: " + ANSI_YELLOW);
             }
         }
         return firstName;
